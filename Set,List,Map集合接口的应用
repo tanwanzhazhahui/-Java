@@ -1,0 +1,66 @@
+import java.util.*;
+public class lab8 {
+		public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+		Set set=new HashSet();
+		set.add("区别");
+		set.add("应用");
+		set.add("Map接口");
+		set.add("与");
+		set.add("Java泛型");
+		set.add("List接口");
+		set.add("Set接口");
+		List list=new ArrayList();
+		list.add("区别");
+		list.add("应用");
+		list.add("Map接口");
+		list.add("与");
+		list.add("Java泛型");
+		list.add("List接口");
+		list.add("Set接口");
+		Map hm=new HashMap();
+		hm.put(1, "区别");
+		hm.put(2, "应用");
+		hm.put(3, "Map接口");
+		hm.put(4, "与");
+		hm.put(5, "Java泛型");
+		hm.put(6, "List接口");
+		hm.put(7, "Set接口");
+		System.out.println("==========Set集合接口的应用==========");
+		System.out.println("第一种输出方式，默认调用toString()方法输出");
+		System.out.println(set.toString());
+		System.out.println("第二种输出方式，使用迭代器逐个遍历");
+		Iterator iter=set.iterator();
+		while(iter.hasNext()){
+			System.out.println(iter.next());
+		}
+		System.out.println("==========Set集合接口的应用end==========");
+		System.out.println("**********List集合接口的应用start********");
+		System.out.println("第一种输出方式，默认调用toString()方法输出");
+		System.out.println(list.toString());
+		System.out.println("第二种输出方式，使用迭代器逐个遍历");
+		Iterator iter2=list.iterator();
+		while(iter2.hasNext()){
+			System.out.println(iter2.next());
+		}
+		System.out.println("==========List集合接口的应用end==========");
+		System.out.println("**********Map集合接口的应用start********");
+		System.out.println("第一种输出方式，默认调用toString()方法输出");
+		System.out.println(hm.toString());
+		System.out.println("第二种输出方式，使用迭代器逐个遍历");
+		System.out.println(hm.get(1));
+		System.out.println(hm.get(2));
+		System.out.println(hm.get(3));
+		System.out.println(hm.get(4));
+		System.out.println(hm.get(5));
+		System.out.println(hm.get(6));
+		System.out.println(hm.get(7));
+
+		
+		
+		
+		
+
+	}
+
+}
