@@ -1,0 +1,134 @@
+public class Animal {
+	private String name;
+	private float weigth;
+	private String food;
+	public void sayHello() {
+		System.out.println("动物打招呼的方式是：");
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name=name;
+	}
+	public float getWeigth() {
+		return weigth;
+	}
+	public void setWeigth(float weigth) {
+		this.weigth=weigth;
+	}
+	public String getFood() {
+		return food;
+	}
+	public void setFood() {
+		this.food=food;
+	}
+	public String toString() {
+		return getName()+"体重:"+getWeigth()+"公斤,所吃食物:"+getFood()+",";
+	}
+	public Animal(String name,float weight,String food) {
+		this.name=name;
+		this.weigth=weight;
+		this.food=food;		
+	}
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+		Animal animal=new Animal("name",0,"food");
+		animal=new Tiger("老虎",55,"肉",1500);
+		System.out.println("老虎的基本信息:");
+		System.out.println(animal.toString());
+		animal.sayHello();
+		animal=new Bull("公牛",150,"草",1000);
+		System.out.println("公牛的基本信息:");
+		System.out.println(animal.toString());
+		animal.sayHello();
+		animal=new Cat("猫",10,"鱼仔",2000);
+		System.out.println("猫的基本信息:");
+		System.out.println(animal.toString());
+		animal.sayHello();
+
+	}
+	
+}
+=========================create a new class in the same page of Animal=============================================
+=========================在Animal的包下创建一个新的类================================================================
+
+public class Bull extends Animal {
+    private int strength;
+	public Bull(String name, float weight, String food,int strength) {
+		super(name, weight, food);// TODO 自动生成的构造函数存根
+		this.strength=strength;
+	}
+	public void getStrength() {
+		this.strength=strength;
+	}
+	public int setStrength(int Strength) {
+		return strength;
+	}
+	public void sayHello() {
+		System.out.println("公牛打招呼的方式:亚麻跌亚麻跌啊啊");
+	}
+	public String toStirng() {
+		String inof=super.toString();
+		inof=inof+"持久度：";
+		return inof;
+	}
+	
+
+}
+
+=========================create a new class in the same page of Animal=============================================
+=========================在Animal的包下创建一个新的类================================================================
+
+public class Cat extends Animal {
+    private int Attention;
+	public Cat(String name, float weight, String food,int Attention) {
+		super(name, weight, food);
+		// TODO 自动生成的构造函数存根
+		this.Attention=Attention;
+	}
+	public void getAttention() {
+		this.Attention=Attention;
+	}
+	public int setAttention(int Attention) {
+		return Attention;
+	}
+	public void sayHello() {
+		System.out.println("小猫打招呼的方式:oops oops so good that is oh oh");
+	}
+	public String toString() {
+		String inof=super.toString();
+		inof=inof+"持久度:";
+		return inof;
+	}
+	
+	
+
+}
+
+=========================create a new class in the same page of Animal=============================================
+=========================在Animal的包下创建一个新的类================================================================
+public class Tiger extends Animal {
+	private int combat;
+	public int getCombat() {
+		return combat;
+	}
+	public void setCombat(int combat) {
+		this.combat=combat;
+	}
+	public Tiger(String name,float weigth,String food,int combat) {
+		super(name,weigth,food);
+		this.combat=combat;
+	}
+	public void sayHello() {
+		System.out.println("老虎打招呼的方式:吼吼吼大家喉");
+	}
+	public String toString() {
+		String inof=super.toString();
+		inof=inof+"战斗力："+this.combat;
+		return inof;
+	}
+
+}
+
+
