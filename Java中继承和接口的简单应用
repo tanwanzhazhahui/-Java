@@ -1,0 +1,106 @@
+public class lab1 {
+
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+		Animal animal = new Animal("动物的名字", 0);
+		Animal cat = new Cat("加菲猫", 4);
+		Animal duck = new Duck("唐小鸭", 2);
+		Animal dolphin = new Dolphin("海豚奇奇", 0);
+		Animal[] arr=new Animal[4];
+		arr[0]=animal;
+		arr[1]=cat;
+		arr[2]=duck;
+		arr[3]=dolphin;
+		if(animal instanceof Animal) {
+			System.out.print(arr[0].getName()+"        "+arr[0].leg()+"        ");
+			arr[0].shout();
+		}else {
+			return;
+		}
+		if(cat instanceof Cat) {
+			System.out.print(arr[1].name+"                "+arr[1].legNum+"          ");
+			arr[1].shout();
+		}else {
+			return;
+		}
+		
+		if(duck instanceof Duck) {
+			System.out.print(arr[2].name+"                "+arr[2].legNum+"          ");
+			arr[2].shout();
+		}else {
+			return;
+		}
+		if(dolphin instanceof Dolphin) {
+			System.out.print(arr[3].name+"             "+arr[3].legNum+"          ");
+			arr[3].shout();
+		}else {
+			return;
+		}
+
+	}
+
+}
+interface Terrestrial {
+	int getLegNum();
+}
+
+class Animal {
+	public String name;
+	public int legNum;
+
+	public Animal(String name, int legNum) {
+		this.name = name;
+		this.legNum = legNum;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void shout() {
+		System.out.println("动物的叫");
+	}
+	public String leg() {
+		return "腿的条数";
+	}
+
+}
+
+class Cat extends Animal implements Terrestrial {
+	public Cat(String name, int legNum) {
+		super(name, legNum);
+	}
+
+	public void shout() {
+		System.out.println("喵喵喵");
+	}
+
+	public int getLegNum() {
+		return legNum;
+	}
+
+}
+
+class Duck extends Animal implements Terrestrial {
+	public Duck(String name, int legNum) {
+		super(name, legNum);
+	}
+
+	public void shout() {
+		System.out.println("嘎嘎嘎");
+	}
+
+	public int getLegNum() {
+		return legNum;
+	}
+}
+
+class Dolphin extends Animal {
+	public Dolphin(String name, int legNum) {
+		super(name, legNum);
+	}
+
+	public void shout() {
+		System.out.println("海豚音");
+	}
+}
