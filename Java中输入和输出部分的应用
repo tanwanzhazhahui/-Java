@@ -1,0 +1,36 @@
+import java.io.*;
+public class FileOutInputStreamDemo {
+
+	public static void main(String[] args) throws IOException {
+		// TODO 自动生成的方法存根
+		File file=new File("C:\\Users\\黎炜俊\\Desktop\\Java哈哈哈\\IoStreamReadWrite.txt");
+		//在此路径创建一个名为IoStreamReadWrite的text文件，此路径与你当前电脑路径不同，您可自由设置
+		FileOutputStream shuchu =new FileOutputStream(file,false);
+		try {
+			String str="我是广州大学华软软件学院软件工程系的学生，我正在学习Java程序设计的I/O部分";
+			byte[] byteArray=str.getBytes();
+			shuchu.write(byteArray);
+			shuchu.write('\r');
+			shuchu.write('\n');
+			System.out.println("文件内容写入完毕");
+		}catch(IOException e) {
+			System.out.println(e.getMessage());
+		}finally {
+			shuchu.close();
+		}
+		FileInputStream shuru =new FileInputStream("C:\\Users\\黎炜俊\\Desktop\\Java哈哈哈\\IoStreamReadWrite.txt");
+		try {
+			byte[] byteArray2=new byte[200];
+			int i=shuru.read(byteArray2);
+			while(i!=-1) {
+				System.out.println(new String(byteArray2,0,i));
+				i=shuru.read(byteArray2);
+			}
+			}catch(IOException e) {
+				System.out.println(e.getMessage());
+			}finally {
+				shuru.close();
+			}
+		}
+
+	}
