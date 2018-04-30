@@ -1,0 +1,35 @@
+
+abstract class Animal {
+	abstract void eat();
+}
+
+	interface Runner{
+		void run(); 
+	}
+	interface Swimmer{
+		void swim();
+	}
+	class Person extends Animal implements Runner,Swimmer{
+		public void run() {
+			System.out.println("我是飞毛腿,跑步速度极快");
+		}
+		public void swim() {
+			System.out.println("我游泳技术很好,会蛙泳，自由泳，仰泳，蝶泳");
+		}
+		void eat() {
+			System.out.println("我牙好胃好,吃啥都香");
+		}
+		
+	}
+	public class InterfaceTest{
+		public static void main(String[] args) {
+			Person person=new Person();
+			System.out.println("以下是使用接口变量,抽象类引用调用方法的结果:");
+			person.run();
+			person.swim();
+			person.eat();
+			
+		}
+		
+		
+	}
