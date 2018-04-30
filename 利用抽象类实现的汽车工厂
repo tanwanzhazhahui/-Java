@@ -1,0 +1,82 @@
+
+import javax.swing.*;
+public class Customer {
+	public static void main(String[] args) {
+		CarFactory.getCar();
+	}
+}
+
+interface Alarm{
+    String getBrand();
+	String alarmNotice();
+}
+abstract class Car implements Alarm{
+	String Brand;
+	String alarmNotice;
+	public abstract String getBrand();
+	public abstract String alarmNotice();
+	public abstract String getInfo();
+}
+class Bentley extends Car implements Alarm{
+	static String Carname="宾利";
+	public static String getBrand(String carname) {
+		return "宾利牌汽车报警器";
+	}
+	public String alarmNotice() {
+		return "呜呜呜呜呜汪汪汪汪汪哔哔哔哔哔哔";
+	}
+	public static String getInfo(String carname) {
+		return "Bentley";
+	}
+	@Override
+	public String getBrand() {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+	@Override
+	public String getInfo() {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+	
+}
+class Audi extends Car implements Alarm{
+	static String Carname="奥迪";
+	public static String getBrand(String carname) {
+		return "奥迪牌汽车报警器";
+	}
+	public String alarmNotice() {
+		return "呜呜呜呜呜汪汪汪汪汪哔哔哔哔哔哔";
+	}
+	public static String getInfo(String carname) {
+		return "Audi";
+	}
+	@Override
+	public String getBrand() {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+	@Override
+	public String getInfo() {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+	
+}
+class CarFactory{
+	public static void getCar(){
+		String car=JOptionPane.showInputDialog("请输入想购买的车辆品牌");
+		if(car.equals(Bentley.Carname)) {
+			System.out.println("顾客要购买宾利");
+			System.out.println("提取汽车:"+Bentley.getInfo("Bentley"));
+			System.out.println("赠送汽车报警器:"+Bentley.getBrand("Bentley"));
+		}
+		else if(car.equals(Audi.Carname)) {
+			System.out.println("顾客要购买奥迪");
+			System.out.println("提取汽车:"+Audi.getInfo("Audi"));
+			System.out.println("赠送汽车报警器:"+Audi.getBrand("Audi"));
+		}else {
+			System.out.println("这里没有你要的车");
+		}
+	}
+}
