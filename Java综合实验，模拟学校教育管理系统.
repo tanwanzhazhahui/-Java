@@ -1,0 +1,384 @@
+
+class User{
+	int uid;
+	String name;
+	String gender;
+	int age;
+	public User(String name,String gender,int age) {
+		this.name=name;
+		this.gender=gender;
+		this.age=age;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name=name;
+	}
+	public String getGender(String gender) {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender=gender;
+	}
+	public int getAge(int age) {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age=age;
+	}
+}
+class Student extends User{
+	String sno;
+	String school;
+	public Student(String sno, String name, String gender, int age,String school) {
+		super(name, gender, age);
+		this.sno=sno;
+		this.school=school;
+	}
+	public String getSno() {
+		return sno;
+	}
+	public void setSno(String sno) {
+		this.sno=sno;
+	}
+	public String getSchool() {
+		return school;
+	}
+	public void setSchool(String school) {
+		this.school=school;
+	}
+	public String toString() {
+		return "学号"+"      "+"姓名"+"   "+"性别"+"   "+"年龄"+"   "+"在读学校";
+	}	
+}
+class CollegeStudent extends Student{
+	String dept;
+	String major;
+	public CollegeStudent(String sno, String name, String gender, int age,String school,String dept,String major) {
+		super(sno,name, gender, age, school);
+		this.dept=dept;
+		this.major=major;
+	}
+	public String getDept() {
+		return dept;
+	}
+	public void setDeptd(String dept) {
+		this.dept=dept;
+	}
+	public String getMajor() {
+		return major;
+	}
+	public void setMajor(String major) {
+		this.major=major;
+	}
+	public String toString() {
+		return "学号"+"      "+"姓名"+"   "+"性别"+"   "+"年龄"+"   "+"所学专业"+"   "+"在读学校"+"   "+"在读院系";
+	}
+}
+class GraduateStudent extends CollegeStudent{
+    String tutor;
+	public GraduateStudent(String sno, String name, String gender, int age, String school,String tutor,String dept,String major) {
+		super(sno,name,gender,age,school,dept,major);
+		this.tutor=tutor;
+	}
+	public String getTutor() {
+		return tutor;
+	}
+	public void setTutor(String tutor) {
+		this.tutor=tutor;
+	}
+	public String toString() {
+		return "学号"+"      "+"姓名"+"   "+"性别"+"   "+"年龄"+"   "+"所学专业"+"   "+"导师姓名"+"   "+"在读学校"+"   "+"在读院系";
+	}
+}
+class Teacher extends User{
+    String wno;
+    String school;
+    String title;
+    String dept;
+    String major;
+	public Teacher(String wno, String name, String gender, int age,String title,String major,String school,String dept) {
+		super(name, gender, age);
+		this.wno=wno;
+		this.school=school;
+		this.title=title;
+		this.dept=dept;
+		this.major=major;
+	}
+	public String getWno() {
+		return wno;
+	}
+	public void setWno(String wno) {
+		this.wno=wno;
+	}
+	public String getSchool() {
+		return school;
+	}
+	public void setSchool(String school) {
+		this.school=school;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title=title;
+	}
+	public String getDept() {
+		return dept;
+	}
+	public void setDept(String dept) {
+		this.dept=dept;
+	}
+	public String getMajor() {
+		return major;
+	}
+	public void setMajor(String major) {
+		this.major=major;
+	}
+	public String toString() {
+		return "工号"+"        "+"姓名"+"   "+"性别"+"   "+"年龄"+"   "+"职称"+"   "+"专业"+"   "+"工作单位"+"   "+"所在教研室";
+	}
+}
+abstract class AbstractStudentManager{
+	String course="Java";
+	public void viewExamTime() {
+		System.out.println("查看考试时间");;
+	}
+	public void viewCourseTimeTable() {
+		System.out.println("查看课表");;
+	}
+	public void viewScore() {
+		System.out.println("查看所有课程的成绩");;
+	}
+	public void viewHomeWork(String course) {
+		System.out.println("查看"+this.course+"所有课程的成绩");
+	}
+	public void downHomeWork() {
+		System.out.println("下载指定作业");
+	}
+    public void updateStudentInfo() {
+		System.out.println("更新本人信息");
+	}
+    public void printStudentInfo(int id) {
+		
+	}
+	public abstract void printMsg();
+	public abstract Student getStudentById(int uid);
+}
+abstract class AbstractCollegeStudentManager extends AbstractStudentManager{
+	String course="C#";
+	public void selectCourse() {
+		System.out.println("自主选课");
+	}
+	public void addPractiseInfo() {
+		System.out.println("添加实习信息");
+	}
+	public void updatePractiseInfo() {
+		System.out.println("修改实习信息");
+	}
+	public void viewHomeWork(String course) {
+		System.out.println("查看"+this.course+"所有课程的成绩");
+	}
+}
+class StudentManagerBean extends AbstractStudentManager{
+	public void viewAttendance() {
+		System.out.println("查看个人所有课程的出勤情况");
+	}
+	public void printMsg() {
+		
+	}
+	public Student getStudentById(int uid) {
+		return null;
+	}
+}
+class CollegeStudentStudentManagerBean extends AbstractStudentManager{
+	String course="C#";
+	public void selectCourse() {
+		System.out.println("自主选课");
+	}
+	public void addPractiseInfo() {
+		System.out.println("添加实习信息");
+	}
+	public void updatePractiseInfo() {
+		System.out.println("修改实习信息");
+	}
+	public void viewAttendance() {
+		System.out.println("查看个人所有课程的出勤情况");
+	}
+	public void viewHomeWork(String course) {
+		System.out.println("查看"+this.course+"所有课程的成绩");
+	}
+	public void printMsg() {
+		
+	}
+	public Student getStudentById(int uid) {
+		return null;
+	}	
+}
+interface GraduateStudentManager{
+	void selectTutor();
+	void updatePaperInfo();
+	void addPaperInfo();
+}
+class GraduateStudentManagerBean extends AbstractCollegeStudentManager implements GraduateStudentManager{
+	String course="面向对象分析与设计";
+	public void selectTutor() {
+		System.out.println("自主择导师");
+	}
+	public void updatePaperInfo() {
+		System.out.println("更新个人发表的论文情况");
+	}
+	public void addPractiseInfo() {
+		System.out.println("添加实习信息");
+	}
+	public void viewAttendance() {
+		System.out.println("查看个人所有课程的出勤情况");
+	}
+	public void viewHomeWork(String course) {
+		System.out.println("查看"+this.course+"所有课程的成绩");
+	}
+	public void printMsg() {
+		
+	}
+	public Student getStudentById(int uid) {
+		return null;
+	}
+	@Override
+	public void addPaperInfo() {
+		System.out.println("添加个人发表的论文情况");
+	}
+
+}
+abstract class AbstractTeacherManager{
+	public void issueHomeWork() {
+		System.out.println("发布作业");
+	}
+	public void registerAttendance() {
+		System.out.println("登记学生考勤");
+	}
+	public void updateAttendance(String sno) {
+		System.out.println("修改指定学生的考勤");
+	}
+	public String queryAttendanceByStudentId(int sid) {
+		return null;
+	}
+	public void updateTeacherInfo() {
+		System.out.println("更新本人信息");
+	}
+	public void printTeacherInfo(int id) {
+		
+	}
+	public abstract void printMsg();
+	public abstract Teacher getTeacherById(int tid);
+}
+class TeacherManagerBean extends AbstractTeacherManager{
+	String course="《几何》";
+	public void registerScore(String course) {
+		System.out.println("登记"+this.course+"课程的成绩");;
+	}
+	public void printMsg() {
+
+	}
+	public Teacher getTeacherById(int tid) {
+		return null;
+	}
+}
+class CollegeTeacherManagerBean extends AbstractTeacherManager{
+	String course="《软件工程》";
+	public void guidePractise() {
+		System.out.println("指导学生实习");
+	}
+	public void guideGraduationDesing() {
+		System.out.println("指导学生毕业设计");
+	}
+	public void registerScore(String course) {
+		System.out.println("登记"+this.course+"课程的成绩");
+	}
+	public void printMsg() {
+		
+	}
+	public Teacher getTeacherById(int tid) {
+		return null;
+	}
+}
+
+public class JavaTest {
+    public static void main(String[] args) {
+    	Student zhangsan=new Student("s0001","张三","女",18,"实验中学");
+    	CollegeStudent lisi=new CollegeStudent("s0002","李四","男",18,"软件开发","华南师范","软件系");
+    	GraduateStudent wangwu=new GraduateStudent("s0003","王五","男",29,"嵌入式开发","赵六","华南理工大学","电子系");
+    	Teacher qianqi=new Teacher("w001","钱七","女",31,"中教一级","汉语言","实验中学","语文教研室");
+    	Teacher sunba=new Teacher("w002","孙八","男",38,"副教授","人工智能","中山大学","软件学院");
+    	System.out.println("===============中小学生信息=============");
+    	System.out.println(zhangsan.toString());
+    	System.out.println(zhangsan.getSno()+"        "+zhangsan.getName()+"   "+zhangsan.getGender("女")+"   "+zhangsan.getAge(18)+"   "+zhangsan.getSchool());
+    	System.out.println("中小学学生可在本系统中执行下列操作");
+    	StudentManagerBean studentmanagerbean=new StudentManagerBean();
+    	studentmanagerbean.downHomeWork();
+    	studentmanagerbean.updateStudentInfo();
+    	studentmanagerbean.viewAttendance();
+    	studentmanagerbean.viewCourseTimeTable();
+    	studentmanagerbean.viewExamTime();
+    	studentmanagerbean.viewHomeWork("Java");
+    	studentmanagerbean.viewScore();
+    	System.out.println("=================大学学生信息==============");
+    	System.out.println(lisi.toString());
+    	System.out.println(lisi.getSno()+"        "+lisi.getName()+"   "+lisi.getGender("男")+"   "+lisi.getAge(18)+"   "+lisi.getMajor()+"   "+lisi.getSchool()+"   "+lisi.getDept());
+    	System.out.println("大学学生可在本系统中执行下列操作");
+    	CollegeStudentStudentManagerBean collegestudentstudentmanagerbean=new CollegeStudentStudentManagerBean();
+    	collegestudentstudentmanagerbean.downHomeWork();
+    	collegestudentstudentmanagerbean.selectCourse();
+    	collegestudentstudentmanagerbean.addPractiseInfo();
+    	collegestudentstudentmanagerbean.updatePractiseInfo();
+    	collegestudentstudentmanagerbean.updateStudentInfo();
+    	collegestudentstudentmanagerbean.viewAttendance();
+    	collegestudentstudentmanagerbean.viewCourseTimeTable();
+    	collegestudentstudentmanagerbean.viewExamTime();
+    	collegestudentstudentmanagerbean.viewHomeWork("C#");
+    	collegestudentstudentmanagerbean.viewScore();
+    	System.out.println("\n");
+    	System.out.println("=================研究生信息==============");
+    	GraduateStudentManagerBean graduatestudentmanagerbean=new GraduateStudentManagerBean();
+    	System.out.println(wangwu.toString());
+    	System.out.println(wangwu.getSno()+"        "+wangwu.getName()+"   "+wangwu.getGender("男")+"   "+wangwu.getAge(29)+"   "+wangwu.getMajor()+"   "+wangwu.getTutor()+"   "+wangwu.getSchool()+"   "+wangwu.getDept());
+    	System.out.println("研究生可在本系统中执行下列操作");
+    	graduatestudentmanagerbean.downHomeWork();
+    	graduatestudentmanagerbean.selectCourse();
+    	graduatestudentmanagerbean.addPractiseInfo();
+    	graduatestudentmanagerbean.updatePractiseInfo();
+    	graduatestudentmanagerbean.updateStudentInfo();
+    	graduatestudentmanagerbean.selectTutor();
+    	graduatestudentmanagerbean.addPaperInfo();
+    	graduatestudentmanagerbean.updatePaperInfo();
+    	graduatestudentmanagerbean.viewAttendance();
+    	graduatestudentmanagerbean.viewCourseTimeTable();
+    	graduatestudentmanagerbean.viewExamTime();
+    	graduatestudentmanagerbean.viewHomeWork("面向对象分析与课程设计");
+    	graduatestudentmanagerbean.viewScore();
+    	System.out.println("\n");
+    	System.out.println("=================中小学教师信息==============");
+    	TeacherManagerBean teachermanagerbean=new TeacherManagerBean();
+    	System.out.println(qianqi.toString());
+    	System.out.println(qianqi.getWno()+"        "+qianqi.getName()+"   "+qianqi.getGender("女")+"   "+qianqi.getAge(31)+"   "+qianqi.getTitle()+"   "+qianqi.getMajor()+"   "+qianqi.getSchool()+"   "+qianqi.getDept());
+    	System.out.println("中小学教师可在本系统中执行下列操作");
+    	teachermanagerbean.issueHomeWork();
+    	teachermanagerbean.registerAttendance();
+    	teachermanagerbean.updateAttendance(null);
+    	teachermanagerbean.registerScore("《几何》");
+    	teachermanagerbean.updateTeacherInfo();
+    	System.out.println("=================大学教师信息==============");
+    	CollegeTeacherManagerBean collegeteachermanagerbean=new CollegeTeacherManagerBean();
+    	System.out.println(sunba.toString());
+    	System.out.println(sunba.getWno()+"        "+sunba.getName()+"   "+sunba.getGender("男")+"   "+sunba.getAge(38)+"   "+sunba.getTitle()+"   "+sunba.getMajor()+"   "+sunba.getSchool()+"   "+sunba.getDept());
+    	System.out.println("大学教师可在本系统中执行下列操作");
+    	collegeteachermanagerbean.issueHomeWork();
+    	collegeteachermanagerbean.registerAttendance();
+    	collegeteachermanagerbean.updateAttendance(null);
+    	collegeteachermanagerbean.registerScore("《软件工程》");
+    	collegeteachermanagerbean.updateTeacherInfo();
+    	collegeteachermanagerbean.guidePractise();
+    	collegeteachermanagerbean.guideGraduationDesing();
+	}
+
+}
