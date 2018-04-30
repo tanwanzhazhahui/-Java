@@ -1,0 +1,26 @@
+import java.util. *;
+public class mark3 {
+
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+		int n=0,n6=0,n7=0,n8=0;
+		System.out.print("请输入学生的成绩（0-100之间的整数，输入负数则结束）");
+		Scanner sc=new Scanner(System.in);
+		float score=sc.nextFloat();
+		do {
+			score=sc.nextInt();
+			if(score>=80 && score<=100) n8++;
+			else if(score>=70) n7++;
+			else if(score>=60) n6++;
+			else n++;
+		}while(score>=0);
+		sc.close();
+		System.out.println("the people between 80 to 100 have :"+n8);
+		System.out.println("the people between 70 to 79.99 have :"+n7);
+		System.out.println("the people between 60 to 69.99 have :"+n6);
+		System.out.println("the people under 60 have :"+n);
+				
+		}
+		
+
+	}
