@@ -1,0 +1,33 @@
+import java.util.*;
+public class DictionaryTest {
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+		Map<String,String> hm=new HashMap<String,String>();
+		hm.put("potato","土豆" );
+		hm.put("tomato","西红柿" );
+		hm.put("peach","桃" );
+		hm.put("pear","梨" );
+		Scanner sn=new Scanner(System.in);
+		System.out.println("请输入要查询的单词:");
+		String shuiguo=sn.nextLine();
+		while(!shuiguo.isEmpty()) {
+			if(shuiguo.equalsIgnoreCase("potato")) {
+				System.out.println("potato的中文是:"+hm.get("potato"));
+			}else if(shuiguo.equalsIgnoreCase("tomato")) {
+				System.out.println("tomato的中文是:"+hm.get("tomato"));
+			}else if(shuiguo.equalsIgnoreCase("peach")) {
+				System.out.println("peach的中文是:"+hm.get("peach"));
+			}else if(shuiguo.equalsIgnoreCase("pear")) {
+				System.out.println("pear的中文是:"+hm.get("pear"));
+			}else {
+				System.out.println("这里没有"+shuiguo);
+			}
+			return;
+		}
+			
+		}
+		
+
+
+
+	}
