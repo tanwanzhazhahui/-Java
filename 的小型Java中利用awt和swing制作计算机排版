@@ -1,0 +1,84 @@
+
+import java.awt.*;
+
+public class Calculator extends Frame {
+	Label space1=new Label("        ");
+	Label space2=new Label("        ");
+	Label space3=new Label("        ");
+	Label space4=new Label("        ");
+	public Calculator() {
+		setTitle("计算机");
+		setVisible(true);
+		setResizable(false);
+		pack();
+		setResizable(true);
+		Panel p1 = new Panel();
+		add(p1, BorderLayout.NORTH);
+		Label l1 = new Label("计算结果:");
+		TextField t1 = new TextField(12);
+		p1.add(l1);
+		p1.add(t1);
+		Panel p2 = new Panel(new GridLayout(4, 1));
+		add(p2, BorderLayout.CENTER);
+		Panel p21 = new Panel();
+		p2.add(p21);
+		String[] str1 = { " 1 ", " 2 ", " 3 ", " + ", " - " };
+		Button[] button1 = new Button[str1.length];
+		for (int i = 0; i < 3; i++) {
+			button1[i] = new Button(str1[i]);
+			p21.add(button1[i]);
+		}
+		p21.add(space1);
+		for(int i=3;i<5;i++) {
+			button1[i]=new Button(str1[i]);
+			p21.add(button1[i]);
+		}
+		Panel p22 = new Panel();
+		p2.add(p22);
+		String[] str2 = { " 4 ", " 5 ", " 6 ", " X ", " / " };
+		Button[] button2 = new Button[str2.length];
+		for (int i = 0; i < 3; i++) {
+			button2[i] = new Button(str2[i]);
+			p22.add(button2[i]);
+		}
+		p22.add(space2);
+		for(int i=3;i<5;i++) {
+			button2[i]=new Button(str2[i]);
+			p22.add(button2[i]);
+		}
+		Panel p23 = new Panel();
+		p2.add(p23);
+		String[] str3 = { " 7 ", " 8 ", " 9 ", " ^ ", " sqrt " };
+		Button[] button3 = new Button[str3.length];
+		for (int i = 0; i < 3; i++) {
+			button3[i] = new Button(str3[i]);
+			p23.add(button3[i]);
+		}
+		p23.add(space3);
+		for(int i=3;i<5;i++) {
+			button3[i]=new Button(str3[i]);
+			p23.add(button3[i]);
+		}
+		Panel p24 = new Panel();
+		p2.add(p24);
+		String[] str4 = { " C ", " 0 ", " . ", "   =   ", };
+		Button[] button4 = new Button[str4.length];
+		for (int i = 0; i < 3; i++) {
+			button4[i] = new Button(str4[i]);
+			p24.add(button4[i]);
+		}
+		p24.add(space4);
+		for(int i=3;i<4;i++) {
+			button4[i]=new Button(str4[i]);
+			p24.add(button4[i]);
+		}
+
+	}
+
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+		Calculator jsj = new Calculator();
+
+	}
+
+}
