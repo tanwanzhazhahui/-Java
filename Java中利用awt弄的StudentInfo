@@ -1,0 +1,64 @@
+
+import java.awt.*;
+public class StudentInfo extends Frame{
+	public StudentInfo() {
+		setTitle("学生信息");
+		setLayout(new GridLayout(5, 1));
+		setVisible(true);
+		Panel p1=new Panel();
+		Panel p2=new Panel();
+		Panel p3=new Panel();
+		Panel p4=new Panel();
+		Panel p5=new Panel();
+		Label name=new Label("姓名");
+		Label num=new Label("学号");
+		Label sex=new Label("性别");
+		Label hob=new Label("爱好");
+		Label major=new Label("系别");
+		TextField t1=new TextField(10);
+		TextField t2=new TextField(10);
+		CheckboxGroup cbg=new CheckboxGroup();
+		Checkbox male=new Checkbox("男", cbg,true);
+		Checkbox female=new Checkbox("女", cbg,false);
+		Checkbox sing=new Checkbox("唱歌");
+		Checkbox paint=new Checkbox("绘画");
+		Checkbox PE=new Checkbox("体育");
+		Choice choice=new Choice();
+		choice.add("软件系");
+		choice.add("网络系");
+		choice.add("电子系");
+		choice.add("游戏系");
+		Button b1=new Button("提交");
+		Button b2=new Button("重置");
+		p1.add(name);
+		p1.add(t1);
+		p1.add(num);
+		p1.add(t2);
+		p2.add(sex);
+		p2.add(male);
+		p2.add(female);
+		p3.add(hob);
+		p3.add(sing);
+		p3.add(paint);
+		p3.add(PE);
+		p4.add(major);
+		p4.add(choice);
+		p5.add(b1);
+		p5.add(b2);
+		add(p1);
+		add(p2);
+		add(p3);
+		add(p4);
+		add(p5);
+		pack();
+		setSize(400,300);
+		setResizable(false);
+	}
+
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+		StudentInfo sdi=new StudentInfo();
+
+	}
+
+}
