@@ -2,7 +2,13 @@
 
 import java.awt. *;
 import java.awt.event.*;
-
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Frame;
+import java.awt.Label;
+import java.awt.Panel;
+import java.awt.TextField;
+import java.awt.event.ActionListener;
 public class LoginFrame extends Frame implements ActionListener {
 	Frame f=new Frame("用户登陆窗口");
 	Button b1=new Button("提交");
@@ -143,7 +149,7 @@ public class LoginFrame extends Frame implements ActionListener {
 		
 	}
 @Override
-public void actionPerformed(ActionEvent e) {
+public void actionPerformed(java.awt.event.ActionEvent e) {
 	// TODO 自动生成的方法存根
 	Object obj=e.getSource();
 	if(obj instanceof Button) {
@@ -172,7 +178,7 @@ public void actionPerformed(ActionEvent e) {
 				d.add(yes);
 				dig.add(d);
 				yes.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
+					public void actionPerformed(java.awt.event.ActionEvent arg0) {
 						// TODO 自动生成的方法存根
 						count.setText("");
 						psw.setText("");
@@ -197,7 +203,6 @@ public void actionPerformed(ActionEvent e) {
 			}
 		}
 	}
-	
 }
 public static void main(String args[]) {
 	LoginFrame lf=new LoginFrame();
