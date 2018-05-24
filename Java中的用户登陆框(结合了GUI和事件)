@@ -1,0 +1,205 @@
+
+
+import java.awt. *;
+import java.awt.event.*;
+
+public class LoginFrame extends Frame implements ActionListener {
+	Frame f=new Frame("用户登陆窗口");
+	Button b1=new Button("提交");
+	Button b2=new Button("重置");
+	Panel p1=new Panel();
+	Panel p2=new Panel();
+	Panel p3=new Panel();
+	TextField count;
+    TextField psw;
+    Dialog dig;
+    Dialog tanchu;
+    Dialog tishi;
+	public LoginFrame() {
+		f.setLayout(new GridLayout(3,1));
+		f.setVisible(true);
+		f.setSize(200, 200);
+		Label c=new Label("用户名");
+		Label p=new Label("密码");
+		count=new TextField(15);
+		psw=new TextField(13);
+		psw.setEchoChar('*');
+		p1.add(c);
+		p1.add(count);
+		p2.add(p);
+		p2.add(psw);
+		p3.add(b1);
+		p3.add(b2);
+		f.add(p1);
+		f.add(p2);
+		f.add(p3);
+		f.pack();
+		f.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+		psw.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if((e.getKeyCode()<KeyEvent.VK_0 ||e.getKeyCode()>KeyEvent.VK_9)&&e.getKeyCode()!=KeyEvent.VK_BACK_SPACE) {
+					e.consume();
+				}
+				
+			}
+		});
+		count.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+					String sc=count.getText();
+					String sw=psw.getText();
+					if(sc.isEmpty() || sw.isEmpty()) {
+						tishi=new Dialog(f,"提示");
+						tishi.setVisible(true);
+						tishi.setSize(200, 100);
+						tishi.pack();
+						tishi.addWindowListener(new WindowAdapter() {
+							public void windowClosing(WindowEvent e) {
+								tishi.dispose();
+							}
+						});
+						Label ts=new Label("账号或密码未输入");
+					    tishi.add(ts,BorderLayout.CENTER);
+					}else if(!sc.isEmpty() && !sw.isEmpty()) {
+						tanchu=new Dialog(f,"弹出新窗口");
+						tanchu.setVisible(true);
+						tanchu.pack();
+						tanchu.setSize(300, 200);
+						tanchu.addWindowListener(new WindowAdapter() {
+							public void windowClosing(WindowEvent e) {
+								tanchu.dispose();
+							}
+						});
+						Label t=new Label("恭喜你，登陆成功");
+						tanchu.add(t,BorderLayout.CENTER);
+					}
+				}
+			}
+		});
+		psw.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+					String sc=count.getText();
+					String sw=psw.getText();
+					if(sc.isEmpty() || sw.isEmpty()) {
+						tishi=new Dialog(f,"提示");
+						tishi.setVisible(true);
+						tishi.setSize(200, 100);
+						tishi.pack();
+						tishi.addWindowListener(new WindowAdapter() {
+							public void windowClosing(WindowEvent e) {
+								tishi.dispose();
+							}
+						});
+						Label ts=new Label("账号或密码未输入");
+					    tishi.add(ts,BorderLayout.CENTER);
+					}else if(!sc.isEmpty() && !sw.isEmpty()) {
+						tanchu=new Dialog(f,"弹出新窗口");
+						tanchu.setVisible(true);
+						tanchu.pack();
+						tanchu.setSize(300, 200);
+						tanchu.addWindowListener(new WindowAdapter() {
+							public void windowClosing(WindowEvent e) {
+								tanchu.dispose();
+							}
+						});
+						Label t=new Label("恭喜你，登陆成功");
+						tanchu.add(t,BorderLayout.CENTER);
+					}
+				}
+			}
+		});
+		f.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+					String sc=count.getText();
+					String sw=psw.getText();
+					if(sc.isEmpty() || sw.isEmpty()) {
+						tishi=new Dialog(f,"提示");
+						tishi.setVisible(true);
+						tishi.setSize(200, 100);
+						tishi.pack();
+						tishi.addWindowListener(new WindowAdapter() {
+							public void windowClosing(WindowEvent e) {
+								tishi.dispose();
+							}
+						});
+						Label ts=new Label("账号或密码未输入");
+					    tishi.add(ts,BorderLayout.CENTER);
+					}
+				}
+			}
+		});
+		count.addActionListener(this);
+		psw.addActionListener(this);
+		b1.addActionListener(this);
+		b2.addActionListener(this);
+		count.addActionListener(this);
+		psw.addActionListener(this);
+		
+	}
+@Override
+public void actionPerformed(ActionEvent e) {
+	// TODO 自动生成的方法存根
+	Object obj=e.getSource();
+	if(obj instanceof Button) {
+		if(b2==obj) {
+			count.setText("");
+			psw.setText("");
+		}
+		if(b1==obj) {
+			String sw=psw.getText();
+			if(sw.isEmpty()) {
+				dig=new Dialog(f, "消息");
+				dig.addWindowListener(new WindowAdapter() {
+					public  void windowClosing(WindowEvent e) {
+						count.setText("");
+						psw.setText("");
+						dig.dispose();
+					}
+				});
+				Panel d=new Panel();
+				dig.setVisible(true);
+				dig.setSize(200, 100);
+				dig.pack();
+				Label db=new Label("账号,密码不正确");
+				Button yes=new Button("确定");
+				dig.add(db,BorderLayout.NORTH);
+				d.add(yes);
+				dig.add(d);
+				yes.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						// TODO 自动生成的方法存根
+						count.setText("");
+						psw.setText("");
+						dig.dispose();
+					}
+				});
+				yes.addActionListener(this);
+			}else {
+				tanchu=new Dialog(f,"弹出新窗口");
+				tanchu.setVisible(true);
+				tanchu.pack();
+				tanchu.setSize(300, 200);
+				tanchu.addWindowListener(new WindowAdapter() {
+					public void windowClosing(WindowEvent e) {
+						count.setText("");
+						psw.setText("");
+						tanchu.dispose();
+					}
+				});
+				Label t=new Label("恭喜你，登陆成功");
+				tanchu.add(t,BorderLayout.CENTER);
+			}
+		}
+	}
+	
+}
+public static void main(String args[]) {
+	LoginFrame lf=new LoginFrame();
+}
+}
