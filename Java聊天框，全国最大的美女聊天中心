@@ -1,0 +1,158 @@
+package test;
+
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.Label;
+import java.awt.Panel;
+import java.awt.TextArea;
+import java.awt.TextField;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+public class ActionEvent extends Frame implements ActionListener{
+	Frame f=new Frame("全国最大的美女聊天中心上线啦,200多万美女任你选择....");
+	Panel p1=new Panel();
+	Panel p2=new Panel();
+	TextField tf=new TextField(30);
+	TextArea ta=new TextArea();
+	Button b1=new Button("提交");
+	Button b2=new Button("重置");
+	Dialog dl;
+	Label l2;
+    public ActionEvent() {
+    	f.setVisible(true);
+    	f.setSize(500, 400);
+    	f.pack();
+    	ta.setEditable(false);
+    	Label l=new Label("请输入你要和接待员说的话:");
+    	p1.add(l);
+    	p1.add(tf);
+    	f.add(p1,BorderLayout.NORTH);
+    	f.add(ta,BorderLayout.CENTER);
+    	p2.add(b1);
+    	p2.add(b2);
+    	f.add(p2,BorderLayout.SOUTH);
+    	f.addWindowListener(new WindowAdapter() {
+    		public void windowClosing(WindowEvent e) {
+    			f.dispose();
+    		}
+		});
+    	b1.addActionListener(this);
+    	b2.addActionListener(this);
+    	tf.addActionListener(this);
+    	tf.addKeyListener(new KeyAdapter() {
+    		public void keyPressed(KeyEvent e) {
+    			String st=tf.getText();
+    			if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+    				if(st.isEmpty()) {
+    					dl=new Dialog(f,"提示");
+    					dl.setVisible(true);
+    					dl.setSize(200, 100);
+    					l2=new Label("小哥你还没输入东西了,输入你要的东西，我们会满足你的哦！");
+    					dl.add(l2,BorderLayout.CENTER);
+    					dl.addWindowListener(new WindowAdapter() {
+    						public void windowClosing(WindowEvent e) {
+    							dl.dispose();
+    						}
+						});	
+    				}
+    				if(!st.isEmpty()) {
+    					ta.append("亲爱的炮友小哥:"+tf.getText()+"\n");
+    					ta.append("美女接待员小娜:广佛肇单身富婆通讯录如下："+"\n");
+    					ta.append("黄美嘉:15202029914"+"\n" + 
+    							"舒琳:18697979390" + "\n"+
+    							"美玲:18376690119" + "\n"+
+    							"何媛:18707455763" + "\n"+
+    							"露露:15277166525" + "\n"+
+    							"王欢:15177117025" + "\n"+
+    							"文文:18276405678" + "\n"+
+    							"珊珊:18277222776" + "\n"+
+    							"小欣:15136915698" + "\n"+
+    							"赵颖:18776939798" + "\n"+
+    							"佟艳:13457673131" + "\n"+
+    							"李洁:15850471789" + "\n"+
+    							"小白:15077014818" + "\n"+
+    							"青青:15677180006" + "\n"+
+    							"阿丽:15778022726" + "\n"+
+    							"微微:13907665198" + "\n"+
+    							"杨洋:18778971228" + "\n"+
+    							"佳佳:18577037718" + "\n"+
+    							"小丽:18523227577" + "\n"+
+    							"张雪:13507887268" + "\n"+
+    							"玲玲:15863156777" + "\n"+
+    							"小芬:13647706242" + "\n"+
+    							"杨静:18777183848" + "\n"+
+    							"钟欣:18776001910" + "\n"+
+    							"赵俐红:13503656036" + "\n"+
+    							"小瑶:15277187588" + "\n"+
+    							"佳楠:13768334777" + "\n"+
+    							"小丽:13877959701" + "\n"+
+    							"阿丽:18076344703" + "\n"+
+    							"小丽:18674537156" + "\n"+
+    							"马玲:18724237755" + "\n"+
+    							"小丽:18674537286" + "\n"+
+    							"小娜:15277713656" + "\n"+
+    							"小玉:18775916617" + "\n"+
+    							"晓晓:13607880639" + "\n"+
+    							"小小:18776951787" + "\n"+
+    							"少钧:15578140626" + "\n"+
+    							"小王:18777116996" + "\n"+
+    							"拉拉:15777145552" + "\n"+
+    							"陈瑶:13877102002" + "\n"+
+    							"金丽:15909453666" + "\n"+
+    							"段洋:18278109121" + "\n"+
+    							"陈瑞:1351662576" + "\n"+
+    							"小青:13560941534" + "\n"+
+    							"清清:18677796313" + "\n"+
+    							"小羽:15777146138" + "\n"+
+    							"小雪:13100515622" + "\n"+
+    							"思琦:15077122283" + "\n"+
+    							"小娜:13803659942" + "\n"+
+    							"欧静:13277888099" + "\n"+
+    							"曾娜:18680273340" + "\n"+
+    							"沈霞:13925087370" + "\n"+
+    							"小琴:15977722825" + "\n"+
+    							"婷婷:18792919899" + "\n"+
+    							"露露:15996183688" + "\n"+
+    							"柳柳:18260877913" + "\n"+
+    							"刘宇:15820245283" + "\n"+
+    							"林志玲:18007712220" + "\n"+
+    							"芳芳:18939590765" + "\n"+
+    							"小卿:13450082948");
+    					tf.setText("");
+    				}
+
+    			}
+    		}
+		});
+    }
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+		ActionEvent actionEvent=new ActionEvent();
+
+	}
+
+	@Override
+	public void actionPerformed(java.awt.event.ActionEvent e) {
+		// TODO 自动生成的方法存根
+		Object obj=e.getSource();
+		if(obj instanceof Button) {
+			if(b2==obj) {
+				ta.setText("");
+				tf.setText("");
+			}
+			if(b1==obj) {
+				ta.append("亲爱的炮友小哥:"+tf.getText()+"\n"+"美女接待员小娜:没有");
+				ta.append("美女接待员小娜:没有");
+				tf.setText("");
+			}
+		}
+		
+	}
+
+}
