@@ -1,0 +1,54 @@
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bson.Document;
+
+import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+class MongoDBUtil{
+	MongoDatabase mongoDatabase;
+	public MongoDatabase getConnection(String DBName) {
+		MongoClient mongoClient=new MongoClient("localhost",27017);
+		mongoDatabase = mongoClient.getDatabase(DBName);
+		System.out.println("连接数据库成功");
+		return mongoDatabase;
+	}
+	public void display(String DBName,String CollectionName) {
+		mongoDatabase=this.getConnection(DBName);
+		MongoCollection<Document> collection=mongoDatabase.getCollection("student2018");
+		System.out.println("集合选择成功");
+		FindIterable<Document> findIterable=collection.find();
+		MongoCursor<Document> mongoCursor =findIterable.iterator();
+		while(mongoCursor.hasNext()) {
+			System.out.println(mongoCursor.next());
+		}
+	}
+}
+
+public class MongoDBJBDBCTest {
+
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+        try {
+			MongoDBUtil util=new MongoDBUtil();
+			MongoCollection<Document> collection=util.getConnection("test").getCollection("student2018");
+			System.out.println("集合选择成功");
+			Document document1=new Document("name", "张三").append("age", 20);
+			Document document2=new Document("name", "李四").append("age", 21);
+			List<Document> documents=new ArrayList<Document>();
+			documents.add(document1);
+			documents.add(document2);
+			collection.insertMany(documents);
+			System.out.println("文档插入成功");
+			util.display("test", "student2018");
+		} catch (Exception e) {
+			// TODO 自动生成的 catch 块
+			System.err.println(e.getClass().getName()+":"+e.getMessage());
+		}
+	}
+
+}
