@@ -1,0 +1,130 @@
+package lab14;
+
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Panel;
+import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketException;
+
+public class TcpServerUI extends Frame {
+	Frame f = new Frame("Server");
+	TextArea ma;
+	TextArea sa;
+	Button b;
+	Button q;
+	Panel p1 = new Panel();
+	Panel p2 = new Panel();
+	Panel p3 = new Panel();
+	Server server;
+	public void setServer(Server server) {
+		this.server=server;
+	}
+	public TcpServerUI() {
+		// TODO 自动生成的构造函数存根
+		f.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				f.dispose();
+			}
+		});
+		f.setVisible(true);
+		f.setSize(500, 400);
+		sa = new TextArea(3, 50);
+		ma = new TextArea();
+		ma.setEditable(false);
+		b = new Button("发送");
+		q = new Button("清屏");
+		q.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO 自动生成的方法存根
+				ma.setText("");
+			}
+		});
+		f.add(ma, BorderLayout.CENTER);
+		p2.add(sa, BorderLayout.CENTER);
+		p3.add(b,new GridLayout());
+		p3.add(q,new GridLayout());
+		b.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				server.sendMsg(sa.getText());
+				ma.append("服务器:" + sa.getText() + "\n");
+				sa.setText("");
+				
+			}
+		});
+		// add event
+		p1.add(p2, BorderLayout.CENTER);
+		p1.add(p3, BorderLayout.EAST);
+		f.add(p1, BorderLayout.SOUTH);
+		f.pack();
+		f.setResizable(false);
+	}
+
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+		TcpServerUI tsu = new TcpServerUI();
+		Server server = new Server(tsu);
+	}
+}
+
+class Server extends Thread{
+	ServerSocket ss;
+	BufferedReader in;
+	PrintStream out;
+	String msg ="";
+	TcpServerUI tui;
+	public Server(TcpServerUI tui) {
+		this.tui=tui;
+		tui.setServer(this);
+		try {
+			ss = new ServerSocket(2222);
+			System.out.println("启动服务器成功,等待端口:2222");
+			Socket s = ss.accept();
+			tui.ma.append("连接成功!来自" + s.toString()+"\n");
+			in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+			out = new PrintStream(s.getOutputStream(),true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		start();
+	}
+	public void run() {
+		while (true) {
+			try {
+				msg = in.readLine();
+			} catch (SocketException e) {
+				// TODO 自动生成的 catch 块
+				System.out.println(e);
+				break;
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e);
+			}
+			if (msg != null) {
+				tui.ma.append(msg + "\n");
+			}
+
+		}
+	}
+	public void sendMsg(String msg) {
+		try {
+			out.println("服务器:" + msg);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+}
