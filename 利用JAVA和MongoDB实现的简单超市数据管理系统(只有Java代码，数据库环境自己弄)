@@ -1,0 +1,976 @@
+==============================================================主类====================================================================
+package Java市场管理系统课程设计;
+
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.Frame;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
+import java.awt.Panel;
+import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.lang.String;
+import java.lang.Object;
+
+
+public class GUI类  extends Frame implements ActionListener{
+	MenuItem 修改密码;
+	MenuItem 退出;
+	MenuItem 添加用户;
+	MenuItem 更新用户;
+	MenuItem 删除用户;
+	MenuItem 查询所有用户;
+	MenuItem 按用户名查询用户;
+	添加用户 tianjia=new 添加用户();
+	更新用户 gengxin=new 更新用户();
+	删除用户 shanchu=new 删除用户();
+	查询用户 chaxun=new 查询用户();
+	MongoDBJavaTest mjt;
+	public GUI类() {
+		Frame f=new Frame("网上超市管理系统");
+		f.setVisible(true);
+		f.setSize(600, 500);
+		MenuBar mb=new MenuBar();
+		Menu 系统管理=new Menu("系统管理");
+		//系统管理的子项目
+		修改密码=new MenuItem("修改密码");
+		退出=new MenuItem("退出");
+		退出.addActionListener(this);
+		系统管理.add(修改密码);
+		系统管理.add(退出);
+		//
+		Menu 用户管理=new Menu("用户管理");
+		//用户管理的子项目
+	    添加用户=new MenuItem("添加用户");
+	    更新用户=new MenuItem("更新用户");
+		删除用户=new MenuItem("删除用户");
+		Menu 查询用户=new Menu("查询用户");
+		//查询用户的子项目
+		查询所有用户=new MenuItem("查找所有用户");
+		按用户名查询用户=new MenuItem("按用户名查询用户");
+		查询用户.add(查询所有用户);
+		查询用户.add(按用户名查询用户);
+		//
+		//
+		Menu 供应商管理=new Menu("供应商管理");
+		Menu 商品管理=new Menu("商品管理");
+		Menu 订单管理=new Menu("订单管理");
+		mb.add(系统管理);
+		mb.add(用户管理);
+		用户管理.add(添加用户);
+		用户管理.add(更新用户);
+		用户管理.add(删除用户);
+		用户管理.add(查询用户);
+		mb.add(供应商管理);
+		mb.add(商品管理);
+		mb.add(订单管理);
+		Canvas 画布=new Canvas();
+		画布.setSize(500, 500);
+		画布.setVisible(true);
+		f.add(画布);
+		f.setMenuBar(mb);
+		f.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+		f.setResizable(false);
+		f.pack();
+		添加用户.addActionListener(this);
+		更新用户.addActionListener(this);
+		删除用户.addActionListener(this);
+		查询所有用户.addActionListener(this);
+		按用户名查询用户.addActionListener(this);
+	}
+	public void actionPerformed(ActionEvent e) {
+		Object obj=e.getSource();
+		if(obj==添加用户) {
+			tianjia.f.setVisible(true);
+		}else if(obj==更新用户) {
+			gengxin.ff.setVisible(true);
+		}else if(obj==删除用户) {
+			shanchu.f.setVisible(true);
+		}else if(obj==查询所有用户) {
+			mjt=new MongoDBJavaTest();
+			mjt.查询所有用户("javatest", "students");
+		}else if(obj==按用户名查询用户) {
+			chaxun.f.setVisible(true);
+		}else if(obj==退出) {
+			System.exit(0);
+		}
+	}
+
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+		GUI类 gui=new GUI类();
+	}
+
+}
+===================================================================================================================================
+
+=====================================================添加用户类======================================================================
+package Java市场管理系统课程设计;
+
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Checkbox;
+import java.awt.CheckboxGroup;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.Panel;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.lang.String;
+import java.lang.Object;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bson.Document;
+
+import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+
+class MongoDBAdd {
+	static MongoDatabase mongoDatabase;
+
+	public static MongoDatabase getConnection(String DBName) {
+		MongoClient mongoClient = new MongoClient("localhost", 27017);
+		mongoDatabase = mongoClient.getDatabase(DBName);
+		return mongoDatabase;
+	}
+}
+
+public class 添加用户 extends Frame implements ActionListener {
+	Frame f;
+	Panel p;
+	Panel p2;
+	Panel p3;
+	Panel p4;
+	Panel p5;
+	Panel p6;
+	Panel p7;
+	Panel p8;
+	Panel p9;
+	Panel p10;
+	TextField 用户名框;
+	TextField 密码框;
+	TextField 真实姓名框;
+	TextField 年龄框;
+	TextField 地址框;
+	TextField email框;
+	TextField 手机框;
+	CheckboxGroup sex;
+	Checkbox 男;
+	Checkbox 女;
+	Button 添加, 重置;
+	// 提示窗组件
+	Frame f2;
+	Panel tp;
+	Panel tp2;
+	Panel tp3;
+	Button 确定;
+	//
+	public 添加用户() {
+		// 主窗
+		f = new Frame("添加用户");
+		f.setVisible(false);
+		f.setSize(400, 600);
+		f.setResizable(false);
+		Panel p = new Panel();
+		p2 = new Panel();
+		Label 用户名 = new Label("用户名:");
+		用户名框 = new TextField(15);
+		p2.add(用户名);
+		p2.add(用户名框);
+		p3 = new Panel();
+		Label 密码 = new Label("密码:");
+		密码框 = new TextField(15);
+		密码框.setEchoChar('*');
+		p3.add(密码);
+		p3.add(密码框);
+		p4 = new Panel();
+		Label 真实姓名 = new Label("真实姓名:");
+		真实姓名框 = new TextField(15);
+		p4.add(真实姓名);
+		p4.add(真实姓名框);
+		p5 = new Panel();
+		Label 性别 = new Label("性别:");
+		sex = new CheckboxGroup();
+		男 = new Checkbox("男", false, sex);
+		女 = new Checkbox("女", false, sex);
+		p5.add(性别);
+		p5.add(男);
+		p5.add(女);
+		p6 = new Panel();
+		Label 年龄 = new Label("年龄:");
+		年龄框 = new TextField(15);
+		p6.add(年龄);
+		p6.add(年龄框);
+		p7 = new Panel();
+		Label 地址 = new Label("地址:");
+		地址框 = new TextField(15);
+		p7.add(地址);
+		p7.add(地址框);
+		p8 = new Panel();
+		Label email = new Label("email:");
+		email框 = new TextField(15);
+		p8.add(email);
+		p8.add(email框);
+		p9 = new Panel();
+		Label 手机 = new Label("手机名");
+		手机框 = new TextField(15);
+		p9.add(手机);
+		p9.add(手机框);
+		p10 = new Panel();
+		添加 = new Button("添加");
+		添加.addActionListener(this);
+		重置 = new Button("重置");
+		重置.addActionListener(this);
+		p10.add(添加);
+		p10.add(重置);
+		// p添加各个panel
+		p.setLayout(new GridLayout(9, 1));
+		p.add(p2);
+		p.add(p3);
+		p.add(p4);
+		p.add(p5);
+		p.add(p6);
+		p.add(p7);
+		p.add(p8);
+		p.add(p9);
+		p.add(p10);
+		f.add(p);
+		f.pack();
+		f.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				f.setVisible(false);
+			}
+		});
+		//
+		// 提示窗
+		f2 = new Frame("消息");
+		f2.setVisible(false);
+		f2.setSize(400, 300);
+		f2.setResizable(false);
+		tp=new Panel();
+		tp2=new Panel();
+		tp3=new Panel();
+		Label 提示 = new Label("数据添加成功");
+		tp2.add(提示);
+		确定 = new Button("确定");
+		确定.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				f2.dispose();
+			}
+		});
+		tp3.add(确定);
+		tp.setLayout(new GridLayout(2, 1));
+		tp.add(tp2);
+		tp.add(tp3);
+		f2.add(tp, BorderLayout.CENTER);
+		f2.pack();
+		f2.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				f2.dispose();
+			}
+		});
+		//
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		Object obj = e.getSource();
+		if (obj == 重置) {
+			用户名框.setText("");
+			密码框.setText("");
+			真实姓名框.setText("");
+			年龄框.setText("");
+			地址框.setText("");
+			email框.setText("");
+			手机框.setText("");
+			sex.setSelectedCheckbox(null);
+		} else if (obj == 添加) {
+			Document document = null;
+			MongoDBAdd ma = new MongoDBAdd();
+			ma.mongoDatabase = MongoDBAdd.getConnection("javatest");
+			MongoCollection<Document> collection = ma.mongoDatabase.getCollection("students");
+			if (男.getState() == true) {
+				document = new Document("用户名", 用户名框.getText()).append("真实姓名", 真实姓名框.getText()).append("性别", "男")
+						.append("年龄", 年龄框.getText()).append("地址", 地址框.getText()).append("email", email框.getText())
+						.append("手机", 手机框.getText());
+			} else if (女.getState() == true) {
+				document = new Document("用户名", 用户名框.getText()).append("真实姓名", 真实姓名框.getText()).append("性别", "女")
+						.append("年龄", 年龄框.getText()).append("地址", 地址框.getText()).append("email", email框.getText())
+						.append("手机", 手机框.getText());
+			} else if (sex.getSelectedCheckbox() == null) {
+				document = new Document("用户名", 用户名框.getText()).append("真实姓名", 真实姓名框.getText()).append("性别", "未知")
+						.append("年龄", 年龄框.getText()).append("地址", 地址框.getText()).append("email", email框.getText())
+						.append("手机", 手机框.getText());
+			}
+			collection.insertOne(document);
+			System.out.println("文档插入成功");
+			f2.setVisible(true);
+		}
+	}
+
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+		添加用户 tianjia = new 添加用户();
+		tianjia.f.setVisible(true);
+	}
+
+}
+========================================================================================================================================
+
+===========================================================更新用户类====================================================================
+package Java市场管理系统课程设计;
+
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.Panel;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.lang.String;
+
+import org.bson.Document;
+
+
+import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+
+import java.lang.Object;
+
+
+class MongoDBUpdate{
+	static MongoDatabase mongoDatabase;
+	public static MongoDatabase getConnection(String DBName) {
+		MongoClient mongoClient=new MongoClient("localhost",27017);
+		mongoDatabase=mongoClient.getDatabase(DBName);
+		return mongoDatabase;
+	}
+}
+public class 更新用户 extends Frame implements ActionListener{
+	Frame f;
+	Panel p;
+	Panel p2;
+	Panel p3;
+	Panel p4;
+	Panel p5;
+	TextField 地址框;
+	TextField email框;
+	TextField 手机框;
+	Button 更新按钮,重置按钮;
+	Frame ff;
+	Panel pp;
+	Panel pp2;
+	Panel pp3;
+	Panel pp4;
+	TextField 输入框;
+    Button 确定按钮,取消按钮;
+    //提示窗组件
+	Frame f2;
+	Panel tp;
+	Panel tp2;
+	Panel tp3;
+	Button 确定1;
+	Frame f3;
+	Panel t2p;
+	Panel t2p2;
+	Panel t2p3;
+	Button 确定2;
+    //
+	public 更新用户() {
+		//第一个窗
+		f=new Frame("更新用户");
+		f.setSize(500, 400);
+		f.setVisible(false);
+		f.setResizable(false);
+		p2=new Panel();
+		Label 地址=new Label("地址:");
+		地址框=new TextField(20);
+		p2.add(地址);
+		p2.add(地址框);
+		p3=new Panel();
+		Label email=new Label("email:");
+		email框=new TextField(20);
+		p3.add(email);
+		p3.add(email框);
+		p4=new Panel();
+		Label 手机=new Label("手机:");
+		手机框=new TextField(20);
+		p4.add(手机);
+		p4.add(手机框);
+		p5=new Panel();
+		更新按钮=new Button("更新按钮");
+		更新按钮.addActionListener(this);
+		重置按钮=new Button("重置按钮");
+		重置按钮.addActionListener(this);
+		p5.add(更新按钮);
+		p5.add(重置按钮);
+		p=new Panel();
+		p.setLayout(new GridLayout(4, 1));
+		p.add(p2);
+		p.add(p3);
+		p.add(p4);
+		p.add(p5);
+		f.add(p);
+		f.pack();
+		f.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				f.setVisible(false);
+			}
+		});
+		//第二个窗
+	    ff=new Frame("输入");
+    	ff.setSize(500, 400);
+    	ff.setResizable(false);
+    	ff.setVisible(false);
+    	pp2=new Panel();
+    	Label 提示=new Label("请输入要查询的用户名");
+    	pp2.add(提示);
+    	pp3=new Panel();
+    	输入框=new TextField(20);
+    	pp3.add(输入框);
+    	pp4=new Panel();
+    	确定按钮=new Button("确定按钮");
+    	确定按钮.addActionListener(this);
+    	取消按钮=new Button("取消按钮");
+    	取消按钮.addActionListener(this);
+    	pp4.add(确定按钮);
+    	pp4.add(取消按钮);
+    	pp=new Panel();
+    	pp.setLayout(new GridLayout(3, 1));
+    	pp.add(pp2);
+    	pp.add(pp3);
+    	pp.add(pp4);
+    	ff.add(pp);
+    	ff.pack();
+    	ff.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				ff.setVisible(false);
+			}
+		});
+		//
+    	//提示窗第一个窗
+		f2 = new Frame("消息");
+		f2.setVisible(false);
+		f2.setSize(400, 300);
+		f2.setResizable(false);
+		tp=new Panel();
+		tp2=new Panel();
+		tp3=new Panel();
+		Label 提示1 = new Label("数据更新成功");
+		tp2.add(提示1);
+		确定1 = new Button("确定");
+		确定1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				f2.dispose();
+			}
+		});
+		tp3.add(确定1);
+		tp.setLayout(new GridLayout(2, 1));
+		tp.add(tp2);
+		tp.add(tp3);
+		f2.add(tp, BorderLayout.CENTER);
+		f2.pack();
+		f2.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				f2.dispose();
+			}
+		});
+    	//
+		//提示窗第二窗
+		f3 = new Frame("消息");
+		f3.setVisible(false);
+		f3.setSize(400, 300);
+		f3.setResizable(false);
+		t2p=new Panel();
+		t2p2=new Panel();
+		t2p3=new Panel();
+		Label 提示2 = new Label("要更新的数据不存在");
+		t2p2.add(提示2);
+		确定2 = new Button("确定");
+		确定2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				f3.dispose();
+			}
+		});
+		t2p3.add(确定2);
+		t2p.setLayout(new GridLayout(2, 1));
+		t2p.add(t2p2);
+		t2p.add(t2p3);
+		f3.add(t2p, BorderLayout.CENTER);
+		f3.pack();
+		f3.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				f3.dispose();
+			}
+		});
+		//
+	}
+	public void actionPerformed(ActionEvent e) {
+		Object obj=e.getSource();
+		if(obj==重置按钮) {
+			地址框.setText("");
+			email框.setText("");
+			手机框.setText("");
+		}else if(obj==更新按钮) {
+			MongoDBUpdate mdu=new MongoDBUpdate();
+			MongoCollection<Document> collection=MongoDBUpdate.getConnection("javatest").getCollection("students");
+			collection.updateMany(Filters.eq("用户名",输入框.getText()),new Document("$set",new Document("地址",地址框.getText())));
+			collection.updateMany(Filters.eq("用户名",输入框.getText()),new Document("$set",new Document("email",email框.getText())));
+			collection.updateMany(Filters.eq("用户名",输入框.getText()),new Document("$set",new Document("手机",手机框.getText())));
+			System.out.println("文档更新成功");
+			f2.setVisible(true);
+			f.setVisible(false);
+		}else if(obj==取消按钮) {
+			输入框.setText("");
+			ff.setVisible(false);
+		}else if(obj==确定按钮) {
+			MongoDBUpdate mdu=new MongoDBUpdate();
+			MongoCollection<Document> collection=MongoDBUpdate.getConnection("javatest").getCollection("students");
+		    Document whereQuery=new Document();
+		    whereQuery.put("用户名", 输入框.getText());
+			FindIterable<Document> findIterable=collection.find(whereQuery);
+			MongoCursor<Document> mongoCursor=findIterable.iterator();
+			if(mongoCursor.hasNext()) {
+			ff.setVisible(false);
+			f.setVisible(true);
+			}else {
+				f3.setVisible(true);
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+               更新用户 gengxin=new 更新用户();
+        gengxin.f3.setVisible(true);
+	}
+
+}
+
+
+========================================================================================================================================
+
+==================================================================删除用户类=============================================================
+package Java市场管理系统课程设计;
+
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.Panel;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.lang.String;
+import java.lang.Object;
+import org.bson.Document;
+
+import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+
+
+class MongoDBDelete{
+	static MongoDatabase mongoDatabase;
+	public static MongoDatabase getConnection(String DBName) {
+		MongoClient mongoClient=new MongoClient("localhost",27017);
+		mongoDatabase=mongoClient.getDatabase(DBName);
+		return mongoDatabase;
+	}
+}
+public class 删除用户 extends Frame implements ActionListener {
+	Frame f;
+	Panel p;
+	Panel p2;
+	Panel p3;
+	Panel p4;
+	TextField 输入框;
+    Button 确定按钮,取消按钮;
+    //提示窗组件
+	Frame f2;
+	Panel tp;
+	Panel tp2;
+	Panel tp3;
+	Button 确定1;
+	Frame f3;
+	Panel t2p;
+	Panel t2p2;
+	Panel t2p3;
+	Button 确定2;
+    //
+    public 删除用户() {
+    	f=new Frame("输入");
+    	f.setSize(500, 400);
+    	f.setResizable(false);
+    	f.setVisible(false);
+    	p2=new Panel();
+    	Label 提示=new Label("请输入要删除的用户ID");
+    	p2.add(提示);
+    	p3=new Panel();
+    	输入框=new TextField(20);
+    	p3.add(输入框);
+    	p4=new Panel();
+    	确定按钮=new Button("确定按钮");
+    	确定按钮.addActionListener(this);
+    	取消按钮=new Button("取消按钮");
+    	取消按钮.addActionListener(this);
+    	p4.add(确定按钮);
+    	p4.add(取消按钮);
+    	p=new Panel();
+    	p.setLayout(new GridLayout(3, 1));
+    	p.add(p2);
+    	p.add(p3);
+    	p.add(p4);
+    	f.add(p);
+    	f.pack();
+    	f.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				f.setVisible(false);
+			}
+		});
+    	//提示窗第一个窗
+		f2 = new Frame("消息");
+		f2.setVisible(false);
+		f2.setSize(400, 300);
+		f2.setResizable(false);
+		tp=new Panel();
+		tp2=new Panel();
+		tp3=new Panel();
+		Label 提示1 = new Label("数据删除成功");
+		tp2.add(提示1);
+		确定1 = new Button("确定");
+		确定1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				f2.dispose();
+			}
+		});
+		tp3.add(确定1);
+		tp.setLayout(new GridLayout(2, 1));
+		tp.add(tp2);
+		tp.add(tp3);
+		f2.add(tp, BorderLayout.CENTER);
+		f2.pack();
+		f2.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				f2.dispose();
+			}
+		});
+    	//
+		//提示窗第二窗
+		f3 = new Frame("消息");
+		f3.setVisible(false);
+		f3.setSize(400, 300);
+		f3.setResizable(false);
+		t2p=new Panel();
+		t2p2=new Panel();
+		t2p3=new Panel();
+		Label 提示2 = new Label("要删除的数据不存在");
+		t2p2.add(提示2);
+		确定2 = new Button("确定");
+		确定2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				f3.dispose();
+			}
+		});
+		t2p3.add(确定2);
+		t2p.setLayout(new GridLayout(2, 1));
+		t2p.add(t2p2);
+		t2p.add(t2p3);
+		f3.add(t2p, BorderLayout.CENTER);
+		f3.pack();
+		f3.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				f3.dispose();
+			}
+		});
+		//
+    }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO 自动生成的方法存根
+		Object obj=e.getSource();
+		if(obj==取消按钮) {
+			输入框.setText("");
+			f.setVisible(false);
+		}else if(obj==确定按钮) {
+			MongoDBUpdate mdu=new MongoDBUpdate();
+			MongoCollection<Document> collection=MongoDBUpdate.getConnection("javatest").getCollection("students");
+		    Document whereQuery=new Document();
+		    whereQuery.put("用户名", 输入框.getText());
+			FindIterable<Document> findIterable=collection.find(whereQuery);
+			MongoCursor<Document> mongoCursor=findIterable.iterator();
+			if(mongoCursor.hasNext()) {
+			collection.deleteOne(Filters.eq("用户名", 输入框.getText()));
+			System.out.println("文档删除成功");
+			f2.setVisible(true);
+			}else {
+				f3.setVisible(true);
+			}
+		}
+		
+	}
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+
+	}
+
+
+}
+
+
+==========================================================================================================================================
+
+===========================================================查找用户类=======================================================================
+package Java市场管理系统课程设计;
+
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.Panel;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bson.Document;
+
+import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+
+
+
+class MongoDBFind{
+	static MongoDatabase mongoDatabase;
+	public static MongoDatabase getConnection(String DBName) {
+		MongoClient mongoClient=new MongoClient("localhost",27017);
+		mongoDatabase=mongoClient.getDatabase(DBName);
+		return mongoDatabase;
+	}
+}
+public class 查询用户 extends Frame implements ActionListener {
+	Frame f;
+	Panel p;
+	Panel p2;
+	Panel p3;
+	Panel p4;
+	TextField 输入框;
+    Button 确定按钮,取消按钮;
+    //提示窗组件
+	Frame f2;
+	Panel tp;
+	Panel tp2;
+	Panel tp3;
+	Button 确定1;
+    //
+    public 查询用户() {
+    	f=new Frame("输入");
+    	f.setSize(500, 400);
+    	f.setResizable(false);
+    	f.setVisible(false);
+    	p2=new Panel();
+    	Label 提示=new Label("请输入要查询的用户用户名");
+    	p2.add(提示);
+    	p3=new Panel();
+    	输入框=new TextField(20);
+    	p3.add(输入框);
+    	p4=new Panel();
+    	确定按钮=new Button("确定按钮");
+    	确定按钮.addActionListener(this);
+    	取消按钮=new Button("取消按钮");
+    	取消按钮.addActionListener(this);
+    	p4.add(确定按钮);
+    	p4.add(取消按钮);
+    	p=new Panel();
+    	p.setLayout(new GridLayout(3, 1));
+    	p.add(p2);
+    	p.add(p3);
+    	p.add(p4);
+    	f.add(p);
+    	f.pack();
+    	f.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				f.setVisible(false);
+			}
+		});
+    	//提示窗第一个窗
+		f2 = new Frame("消息");
+		f2.setVisible(false);
+		f2.setSize(400, 300);
+		f2.setResizable(false);
+		tp=new Panel();
+		tp2=new Panel();
+		tp3=new Panel();
+		Label 提示1 = new Label("要查询的数据不存在");
+		tp2.add(提示1);
+		确定1 = new Button("确定");
+		确定1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				f2.dispose();
+			}
+		});
+		tp3.add(确定1);
+		tp.setLayout(new GridLayout(2, 1));
+		tp.add(tp2);
+		tp.add(tp3);
+		f2.add(tp, BorderLayout.CENTER);
+		f2.pack();
+		f2.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				f2.dispose();
+			}
+		});
+    	//
+    }
+	public void actionPerformed(ActionEvent e) {
+		// TODO 自动生成的方法存根
+		Object obj=e.getSource();
+		if(obj==取消按钮) {
+			输入框.setText("");
+			f.setVisible(false);
+		}else if(obj==确定按钮) {
+			MongoDBJavaTest mjt=new MongoDBJavaTest();
+			mjt.mongoDatabase=MongoDBFind.getConnection("javatest");
+			MongoCollection<Document> collection=mjt.mongoDatabase.getCollection("students");
+			Document whereQuery=new Document();
+			whereQuery.put("用户名",输入框.getText());
+			FindIterable<Document> findIterable=collection.find(whereQuery);
+			MongoCursor<Document> mongoCursor=findIterable.iterator();
+			if(mongoCursor.hasNext()) {
+				System.out.println(mongoCursor.next());
+			}else {
+				f2.setVisible(true);
+			}
+			
+		}
+	}
+
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+
+
+	}
+
+
+
+}
+========================================================================================================================================
+
+==============================================================查找所有用户类（有些方法重复没用）============================================
+package Java市场管理系统课程设计;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bson.Document;
+
+import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+
+public class MongoDBJavaTest {
+	MongoDatabase mongoDatabase;
+	GUI类  gui;
+	添加用户 tianjia;
+	查询用户 chaxun;
+	public MongoDatabase getConnection(String DBName) {
+		MongoClient mongoClient=new MongoClient("localhost",27017);
+		//连接数据库
+		mongoDatabase=mongoClient.getDatabase(DBName);
+		return mongoDatabase;
+	}
+	//添加用户
+	public void 添加用户(String DBName,String CollectionName) {
+		Document document = null;
+		mongoDatabase=this.getConnection(DBName);
+		MongoCollection<Document> collection=mongoDatabase.getCollection("students");
+        if(tianjia.男.getState()==true) {
+        	document=new Document("用户名",tianjia.用户名框.getText()).append("真实姓名", tianjia.真实姓名框.getText()).append("性别", "男").append("年龄", tianjia.年龄框.getText()).append("地址", tianjia.地址框.getText()).append("email", tianjia.email框.getText()).append("手机", tianjia.手机框.getText());
+        }else if(tianjia.女.getState()==true) {
+        	document=new Document("用户名",tianjia.用户名框.getText()).append("真实姓名", tianjia.真实姓名框.getText()).append("性别", "女").append("年龄", tianjia.年龄框.getText()).append("地址", tianjia.地址框.getText()).append("email", tianjia.email框.getText()).append("手机", tianjia.手机框.getText());
+        }else if(tianjia.sex.getSelectedCheckbox()==null) {
+        	document=new Document("用户名",tianjia.用户名框.getText()).append("真实姓名", tianjia.真实姓名框.getText()).append("性别", "未知").append("年龄", tianjia.年龄框.getText()).append("地址", tianjia.地址框.getText()).append("email", tianjia.email框.getText()).append("手机", tianjia.手机框.getText());
+        }
+        collection.insertOne(document);
+        System.out.println("文档插入成功");
+	}
+	//指出指定数据库的集合文档
+	public void 查询所有用户(String DBName,String CollectionName) {
+		mongoDatabase=this.getConnection(DBName);
+		MongoCollection<Document> collection=mongoDatabase.getCollection("students");
+		//通过游标遍历索引出的文档集合
+		FindIterable<Document> findIterable=collection.find();
+		MongoCursor<Document> mongoCursor=findIterable.iterator();
+		while(mongoCursor.hasNext()) {
+			System.out.println(mongoCursor.next());
+		}
+	}
+	public void 按编号查询用户(String DBName,String CollectionName) {
+		mongoDatabase=this.getConnection(DBName);
+		MongoCollection<Document> collection=mongoDatabase.getCollection("students");
+		//通过游标遍历索引出的文档集合
+		Document whereQuery=new Document();
+		whereQuery.put("用户名",chaxun.输入框.getText());
+		FindIterable<Document> findIterable=collection.find(whereQuery);
+		MongoCursor<Document> mongoCursor=findIterable.iterator();
+		while(mongoCursor.hasNext()) {
+			System.out.println(mongoCursor.next());
+		}
+	}
+	public static void main(String[] args) {
+
+	}
+
+}
+=======================================================================================================================================
