@@ -974,3 +974,97 @@ public class MongoDBJavaTest {
 
 }
 =======================================================================================================================================
+===================================================查询并更新用户=======================================================================
+package Java市场管理系统课程设计;
+
+import java.awt.Button;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.Panel;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import org.bson.Document;
+
+import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+
+class MongoDBUpdate1{
+	static MongoDatabase mongoDatabase;
+	public static MongoDatabase getConnection(String DBName) {
+		MongoClient mongoClient=new MongoClient("localhost",27017);
+		mongoDatabase=mongoClient.getDatabase(DBName);
+		return mongoDatabase;
+	}
+}
+public class 查询并更新用户 extends Frame implements ActionListener{
+	Frame f;
+	Panel p;
+	Panel p2;
+	Panel p3;
+	Panel p4;
+	TextField 输入框;
+    Button 确定按钮,取消按钮;
+       更新用户 gengxin=new 更新用户();
+    public 查询并更新用户() {
+    	f=new Frame("输入");
+    	f.setSize(500, 400);
+    	f.setResizable(false);
+    	f.setVisible(false);
+    	p2=new Panel();
+    	Label 提示=new Label("请输入要查询的用户名");
+    	p2.add(提示);
+    	p3=new Panel();
+    	输入框=new TextField(20);
+    	p3.add(输入框);
+    	p4=new Panel();
+    	确定按钮=new Button("确定按钮");
+    	确定按钮.addActionListener(this);
+    	取消按钮=new Button("取消按钮");
+    	取消按钮.addActionListener(this);
+    	p4.add(确定按钮);
+    	p4.add(取消按钮);
+    	p=new Panel();
+    	p.setLayout(new GridLayout(3, 1));
+    	p.add(p2);
+    	p.add(p3);
+    	p.add(p4);
+    	f.add(p);
+    	f.pack();
+    	f.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				f.setVisible(false);
+			}
+		});
+    }
+	public void actionPerformed(ActionEvent e) {
+		// TODO 自动生成的方法存根
+		Object obj=e.getSource();
+		if(obj==取消按钮) {
+			输入框.setText("");
+			f.setVisible(false);
+		}else if(obj==确定按钮) {
+			gengxin.f.setVisible(true);
+			f.setVisible(false);
+		}
+	}
+
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+
+
+	}
+
+
+
+
+}
+
