@@ -14,6 +14,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.String;
+import java.util.Vector;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
 import java.lang.Object;
 
 
@@ -30,8 +35,9 @@ public class GUI类  extends Frame implements ActionListener{
 	删除用户 shanchu=new 删除用户();
 	查询用户 chaxun=new 查询用户();
 	MongoDBJavaTest mjt;
+	static Frame f;
 	public GUI类() {
-		Frame f=new Frame("网上超市管理系统");
+		f=new Frame("网上超市管理系统");
 		f.setVisible(true);
 		f.setSize(600, 500);
 		MenuBar mb=new MenuBar();
@@ -68,17 +74,18 @@ public class GUI类  extends Frame implements ActionListener{
 		mb.add(供应商管理);
 		mb.add(商品管理);
 		mb.add(订单管理);
-		Canvas 画布=new Canvas();
-		画布.setSize(500, 500);
-		画布.setVisible(true);
-		f.add(画布);
+		//JTable
+		Canvas canvas=new Canvas();
+		canvas.setSize(600,500);
+		canvas.setVisible(true);
+		f.add(canvas,BorderLayout.CENTER);
+		//
 		f.setMenuBar(mb);
 		f.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
 			}
 		});
-		f.setResizable(false);
 		f.pack();
 		添加用户.addActionListener(this);
 		更新用户.addActionListener(this);
