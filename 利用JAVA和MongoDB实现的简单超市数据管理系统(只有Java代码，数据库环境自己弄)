@@ -764,6 +764,7 @@ package Java市场管理系统课程设计;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Label;
@@ -776,9 +777,16 @@ import java.awt.event.WindowEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import org.bson.Document;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -809,7 +817,11 @@ public class 查询用户 extends Frame implements ActionListener {
 	Panel tp2;
 	Panel tp3;
 	Button 确定1;
-    //
+	static GUI类  gui;
+	static Vector rowData,columnNames,hang;
+	static JTable jt;
+	static JScrollPane jsp;
+	static Dialog d;
     public 查询用户() {
     	f=new Frame("输入");
     	f.setSize(500, 400);
@@ -885,8 +897,54 @@ public class 查询用户 extends Frame implements ActionListener {
 			whereQuery.put("用户名",输入框.getText());
 			FindIterable<Document> findIterable=collection.find(whereQuery);
 			MongoCursor<Document> mongoCursor=findIterable.iterator();
+			FindIterable<Document> 用户名=collection.find(whereQuery).projection(new BasicDBObject("用户名", 1)).projection(new BasicDBObject("_id", 0));
+			MongoCursor<Document> 用户名迭代=findIterable.iterator();
+			FindIterable<Document> 真实姓名=collection.find(whereQuery).projection(new BasicDBObject("真实姓名", 1)).projection(new BasicDBObject("_id", 0));
+			MongoCursor<Document> 真实姓名迭代=findIterable.iterator();
+			FindIterable<Document> 性别=collection.find(whereQuery).projection(new BasicDBObject("性别", 1)).projection(new BasicDBObject("_id", 0));
+			MongoCursor<Document> 性别迭代=findIterable.iterator();
+			FindIterable<Document> 年龄=collection.find(whereQuery).projection(new BasicDBObject("年龄", 1)).projection(new BasicDBObject("_id", 0));
+			MongoCursor<Document> 年龄迭代=findIterable.iterator();
+			FindIterable<Document> 地址=collection.find(whereQuery).projection(new BasicDBObject("地址", 1)).projection(new BasicDBObject("_id", 0));
+			MongoCursor<Document> 地址迭代=findIterable.iterator();
+			FindIterable<Document> email=collection.find(whereQuery).projection(new BasicDBObject("email", 1)).projection(new BasicDBObject("_id", 0));
+			MongoCursor<Document> email迭代=findIterable.iterator();
+			FindIterable<Document> 手机=collection.find(whereQuery).projection(new BasicDBObject("手机", 1)).projection(new BasicDBObject("_id", 0));
+			MongoCursor<Document> 手机迭代=findIterable.iterator();
 			if(mongoCursor.hasNext()) {
-				System.out.println(mongoCursor.next());
+				columnNames=new Vector();
+				columnNames.add("用户名");
+				columnNames.add("真实姓名");
+				columnNames.add("性别");
+				columnNames.add("年龄");
+				columnNames.add("地址");
+				columnNames.add("email");
+				columnNames.add("手机");
+				rowData =new Vector();
+				hang=new Vector();
+				hang.add(用户名迭代.next().get("用户名").toString());
+				hang.add(真实姓名迭代.next().get("真实姓名").toString());
+				hang.add(性别迭代.next().get("性别").toString());
+                hang.add(年龄迭代.next().get("年龄").toString());
+                hang.add(地址迭代.next().get("地址").toString());
+                hang.add(email迭代.next().get("email").toString());
+                hang.add(手机迭代.next().get("手机").toString());
+				rowData.add(hang);
+				jt=new JTable(rowData,columnNames);
+				jsp=new JScrollPane(jt);
+				d=new Dialog(f);
+				d.setTitle("查询结果");
+				d.setSize(600, 500);
+				d.add(jsp,BorderLayout.CENTER);
+				d.addWindowListener(new WindowAdapter() {
+					public void windowClosing(WindowEvent e) {
+						d.dispose();
+					}
+				});
+				d.pack();
+				d.setResizable(true);
+				d.show();
+				System.out.println(mongoCursor.next().toJson());
 			}else {
 				f2.setVisible(true);
 			}
@@ -896,8 +954,7 @@ public class 查询用户 extends Frame implements ActionListener {
 
 	public static void main(String[] args) {
 		// TODO 自动生成的方法存根
-
-
+		查询用户 chaxun=new 查询用户();
 	}
 
 
